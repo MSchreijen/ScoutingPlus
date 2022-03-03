@@ -36,7 +36,7 @@ public class FakePersonData implements PersonRepository {
 
     @Override
     public int createPerson(Person obj) {
-        int newId = personList.size() + 1;
+        int newId = personList.size();
         obj.setId(newId);
         personList.add(obj);
         return newId;
