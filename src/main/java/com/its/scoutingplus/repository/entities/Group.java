@@ -3,30 +3,36 @@ package com.its.scoutingplus.repository.entities;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter @Setter
+@AllArgsConstructor
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class Person {
-
+public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+
+    private String name;
+
+    @OneToMany
+    @ToString.Exclude
+    private List<Person> members;
+
+    @ManyToMany
+    @ToString.Exclude
+    private List<Person> leaders;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Person person = (Person) o;
-        return id != null && Objects.equals(id, person.id);
+        Group group = (Group) o;
+        return id != null && Objects.equals(id, group.id);
     }
 
     @Override
@@ -34,3 +40,5 @@ public class Person {
         return getClass().hashCode();
     }
 }
+
+
