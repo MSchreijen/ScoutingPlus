@@ -4,7 +4,6 @@ import com.its.scoutingplus.repository.entities.Person;
 import com.its.scoutingplus.repository.interfaces.PersonRepository;
 import com.its.scoutingplus.services.interfaces.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,25 +14,25 @@ public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
 
     @Autowired
-    public PersonServiceImplementation(@Qualifier("fake") PersonRepository personRepository) {
+    public PersonServiceImplementation(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
     @Override
     public List<Person> getAllPersons() {
-        return personRepository.getAllPersons();
+        return personRepository.findAll();
     }
 
     @Override
-    public Person getPersonById(int id) {
-        return personRepository.getPersonById(id);
+    public Person getPersonById(Long id) {
+        return personRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Person> getPersonsByName(String firstName) {
         List<Person> filteredPersons = new ArrayList<>();
 
-        for (Person person : personRepository.getAllPersons()) {
+        for (Person person : personRepository.findAll()) {
             if(person.getFirstName().contains(firstName)) filteredPersons.add(person);
         }
 
@@ -41,17 +40,29 @@ public class PersonServiceImplementation implements PersonService {
     }
 
     @Override
-    public int createPerson(Person person) {
-        return personRepository.createPerson(person);
+    public Long createPerson(Person person) {
+        return personRepository.save(person).getId();
     }
 
     @Override
     public boolean updatePerson(Person person) {
-        return personRepository.updatePerson(person);
+        if(personRepository.existsById(person.getId())) {
+            personRepository.save(person);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
     public boolean deletePerson(Person person) {
-        return personRepository.deletePerson(person);
+        if(personRepository.existsById(person.getId())) {
+            personRepository.delete(person);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

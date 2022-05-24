@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface PersonService {
     List<Person> getAllPersons();
-    Person getPersonById(int id);
+    Person getPersonById(Long id);
     List<Person> getPersonsByName(String firstName);
-    int createPerson(Person person);
+    Long createPerson(Person person);
     boolean updatePerson(Person person);
     boolean deletePerson(Person person);
 }
