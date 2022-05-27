@@ -11,6 +11,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name="persons")
 public class Person {
 
     @Id
