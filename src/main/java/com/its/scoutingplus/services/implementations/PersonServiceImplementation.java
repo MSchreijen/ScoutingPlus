@@ -4,7 +4,6 @@ import com.its.scoutingplus.repository.entities.Person;
 import com.its.scoutingplus.repository.interfaces.PersonRepository;
 import com.its.scoutingplus.services.interfaces.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
 
     @Autowired
-    public PersonServiceImplementation(@Qualifier("fake") PersonRepository personRepository) {
+    public PersonServiceImplementation(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
@@ -27,13 +26,7 @@ public class PersonServiceImplementation implements PersonService {
 
     @Override
     public Person getPersonById(Long id) {
-        Optional<Person> person = personRepository.findById(id);
-        if (person.isPresent()) {
-            return person.get();
-        }
-        else {
-            return null;
-        }
+        return personRepository.findById(id).orElse(null);
     }
 
     @Override

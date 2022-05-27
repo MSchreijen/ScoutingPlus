@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(userService.getUserById(id));
         }
@@ -49,7 +49,7 @@ public class UserController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
-            int id = userService.createUser(user);
+            Long id = userService.createUser(user);
             URI location = new URI("/user/" + id);
             return ResponseEntity.created(location).build();
         }
