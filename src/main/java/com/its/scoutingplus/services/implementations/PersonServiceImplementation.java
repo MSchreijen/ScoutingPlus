@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImplementation implements PersonService {
@@ -21,37 +22,49 @@ public class PersonServiceImplementation implements PersonService {
 
     @Override
     public List<Person> getAllPersons() {
-        return personRepository.getAllPersons();
+        return personRepository.findAll();
     }
 
     @Override
-    public Person getPersonById(int id) {
-        return personRepository.getPersonById(id);
+    public Person getPersonById(Long id) {
+        Optional<Person> person = personRepository.findById(id);
+        if (person.isPresent()) {
+            return person.get();
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
     public List<Person> getPersonsByName(String firstName) {
-        List<Person> filteredPersons = new ArrayList<>();
-
-        for (Person person : personRepository.getAllPersons()) {
-            if(person.getFirstName().contains(firstName)) filteredPersons.add(person);
-        }
-
-        return filteredPersons;
+        return personRepository.findByFirstName(firstName);
     }
 
     @Override
-    public int createPerson(Person person) {
-        return personRepository.createPerson(person);
+    public Long createPerson(Person person) {
+        return personRepository.save(person).getId();
     }
 
     @Override
     public boolean updatePerson(Person person) {
-        return personRepository.updatePerson(person);
+        if (personRepository.existsById(person.getId())) {
+            personRepository.save(person);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
     public boolean deletePerson(Person person) {
-        return personRepository.deletePerson(person);
+        if (personRepository.existsById(person.getId())) {
+            personRepository.delete(person);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

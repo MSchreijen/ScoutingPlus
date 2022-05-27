@@ -26,7 +26,7 @@ public class PersonController {
 
     @GetMapping(produces = "application/json")
     public ResponseEntity<List<Person>> getAllPersons() {
-        try{
+        try {
             return ResponseEntity.ok(personService.getAllPersons());
         }
         catch (Exception e) {
@@ -36,20 +36,20 @@ public class PersonController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<Person> getPersonById(@PathVariable("id") int id) {
+    public ResponseEntity<Person> getPersonById(@PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(personService.getPersonById(id));
         }
         catch (Exception e) {
             logger.error("An error was thrown in getPersonById!", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.internalServerError().build();
         }
     }
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> createPerson(@RequestBody Person person) {
         try {
-            int id = personService.createPerson(person);
+            Long id = personService.createPerson(person);
             URI location = new URI("/person/" + id);
             return ResponseEntity.created(location).build();
         }
@@ -62,8 +62,12 @@ public class PersonController {
     @PutMapping(consumes = "application/json")
     public ResponseEntity<?> updatePerson(@RequestBody Person person) {
         try {
-            if (personService.updatePerson(person)) return ResponseEntity.noContent().build();
-            else return ResponseEntity.badRequest().build();
+            if (personService.updatePerson(person)) {
+                return ResponseEntity.noContent().build();
+            }
+            else {
+                return ResponseEntity.badRequest().build();
+            }
         }
         catch (Exception e) {
             logger.error("An error was thrown in updatePerson!", e);
@@ -74,8 +78,12 @@ public class PersonController {
     @DeleteMapping(consumes = "application/json")
     public ResponseEntity<?> deletePerson(@RequestBody Person person) {
         try {
-            if (personService.deletePerson(person)) return ResponseEntity.noContent().build();
-            else return ResponseEntity.badRequest().build();
+            if (personService.deletePerson(person)) {
+                return ResponseEntity.noContent().build();
+            }
+            else {
+                return ResponseEntity.badRequest().build();
+            }
         }
         catch (Exception e) {
             logger.error("An error was thrown in deletePerson!", e);

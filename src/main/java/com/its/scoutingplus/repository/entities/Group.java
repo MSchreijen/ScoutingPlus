@@ -12,6 +12,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
+@Table(name = "groups")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +20,13 @@ public class Group {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Person> members;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     @ToString.Exclude
-    private List<Person> leaders;
+    private List<Leader> leaders;
 
     @Override
     public boolean equals(Object o) {

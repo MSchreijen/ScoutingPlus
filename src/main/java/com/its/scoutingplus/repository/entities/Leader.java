@@ -11,7 +11,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Person {
+public class Leader {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,18 +45,17 @@ public class Person {
 
     private String email_optional;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_group_id", nullable = false)
+    @JoinColumn(name = "leader_group_id", nullable = false)
     @ToString.Exclude
-    private Group memberGroup;
+    private Group leaderGroup;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Person person = (Person) o;
-        return id != null && Objects.equals(id, person.id);
+        Leader leader = (Leader) o;
+        return getId() != null && Objects.equals(getId(), leader.getId());
     }
 
     @Override
@@ -64,3 +63,4 @@ public class Person {
         return getClass().hashCode();
     }
 }
+
