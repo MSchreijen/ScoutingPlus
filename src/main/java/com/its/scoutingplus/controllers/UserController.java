@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+import static com.its.scoutingplus.constants.API_URL;
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = API_URL + "/user")
 public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);

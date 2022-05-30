@@ -46,12 +46,6 @@ public class Person {
 
     private String email_optional;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_group_id", nullable = false)
-    @ToString.Exclude
-    private Group memberGroup;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

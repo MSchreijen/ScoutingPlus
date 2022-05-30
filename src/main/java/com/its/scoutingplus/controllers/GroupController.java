@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+import static com.its.scoutingplus.constants.API_URL;
+
 
 //The REST controller for the group entity
 @RestController
-@RequestMapping("/group")
+@RequestMapping(value = API_URL + "/group")
 public class GroupController {
     //Autowired group service to use the group service
     private final GroupService groupService;

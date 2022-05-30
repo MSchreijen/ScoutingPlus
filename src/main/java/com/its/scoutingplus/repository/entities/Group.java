@@ -2,6 +2,8 @@ package com.its.scoutingplus.repository.entities;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "groups")
+@Table(name = "scouting_groups")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +22,13 @@ public class Group {
 
     private String name;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
     private List<Person> members;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
     private List<Leader> leaders;
 

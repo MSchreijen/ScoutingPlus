@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+import static com.its.scoutingplus.constants.API_URL;
+
 @RestController
-@RequestMapping("/person")
+@RequestMapping(value = API_URL + "/person")
 public class PersonController {
 
     private final PersonService personService;
@@ -24,7 +26,7 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/all", produces = "application/json")
     public ResponseEntity<List<Person>> getAllPersons() {
         try {
             return ResponseEntity.ok(personService.getAllPersons());
