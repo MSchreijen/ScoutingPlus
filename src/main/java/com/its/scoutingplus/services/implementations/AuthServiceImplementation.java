@@ -36,7 +36,7 @@ public class AuthServiceImplementation implements AuthService {
     }
 
     @Override
-    public ResponseEntity<?> register(String username, String password) {
+    public ResponseEntity<?> register(String username, String email, String password) {
         if(username.length() > 20) {
             return ResponseEntity.badRequest().body("Username must be less than 20 characters");
         }
@@ -57,7 +57,7 @@ public class AuthServiceImplementation implements AuthService {
             return ResponseEntity.badRequest().body("Username already exists");
         }
 
-        User user = new User(username, encoder.encode(password));
+        User user = new User(username, email, encoder.encode(password));
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));

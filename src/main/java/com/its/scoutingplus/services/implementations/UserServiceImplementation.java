@@ -68,6 +68,17 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     }
 
     @Override
+    public boolean deleteUser(Long id) {
+        if(userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
     public Long saveRole(Role role) {
         if(roleRepository.findByName(role.getName()).isEmpty()) {
             return roleRepository.save(role).getId();

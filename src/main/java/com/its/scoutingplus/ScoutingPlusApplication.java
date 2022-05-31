@@ -31,10 +31,10 @@ public class ScoutingPlusApplication {
             userService.saveRole(new Role(null, "ROLE_ADMIN"));
             userService.saveRole(new Role(null, "ROLE_USER"));
 
-            authService.register("merijn", "Pannenkoek2!");
+            authService.register("merijn", "merijn.schreijen@gmail.com", "Pannenkoek2!");
             userService.addRoleToUser("merijn", "ROLE_ADMIN");
 
-            authService.register("bjorn", "retard");
+            authService.register("bjorn", "bwildemantest@gmail.com", "retard");
         };
     }
 

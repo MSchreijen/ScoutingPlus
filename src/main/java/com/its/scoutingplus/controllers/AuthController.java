@@ -30,7 +30,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterUserRequest request) {
-        return authService.register(request.getUsername(), request.getPassword());
+        return authService.register(request.getUsername(), request.getEmail(), request.getPassword());
     }
 
     @PostMapping("/changepassword")

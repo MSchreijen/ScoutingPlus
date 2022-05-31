@@ -73,6 +73,18 @@ public class UserController {
         }
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+        try {
+            if (userService.deleteUser(id)) return ResponseEntity.noContent().build();
+            else return ResponseEntity.badRequest().build();
+        }
+        catch (Exception e) {
+            logger.error("An error was thrown in deleteUser!", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @DeleteMapping(consumes = "application/json")
     public ResponseEntity<?> deleteUser(@RequestBody User user) {
         try {

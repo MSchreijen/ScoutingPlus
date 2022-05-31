@@ -12,6 +12,7 @@ public interface UserService {
     Long createUser(User user);
     boolean updateUser(User user);
     boolean deleteUser(User user);
+    boolean deleteUser(Long id);
     Long saveRole(Role role);
     ResponseEntity<?> addRoleToUser(String username, String roleName);
 }
